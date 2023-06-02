@@ -1,6 +1,8 @@
 package com.deveficiente.heuristicas.coesaobasica.validarequest.v1;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ValidaSeEstadoPertenceAPais {
 	
@@ -28,15 +30,21 @@ public class ValidaSeEstadoPertenceAPais {
 	 * @return lista com mensagens de erros
 	 */
 	public List<String> valida(NovoClienteRequest request) {
-		Estado estado = bancoDeDadosPaisesEEstados.buscaEstadoPeloNome(request.getEstado());
-		Pais pais = bancoDeDadosPaisesEEstados.buscaPaisPeloNome(request.getNomePais());
+		ArrayList<String> erros = new ArrayList<>();
 
-		boolean estadoPertenceAoPais = estado.verificaSePertenceAoPais(pais);
+		Optional<String> possivelEstado = request.getEstado();
 
-		if (estadoPertenceAoPais) {
-			return List.of("O pais pertence ao Pais");
+		if (possivelEstado.isPresent()) {
+			Pais pais = bancoDeDadosPaisesEEstados.buscaPaisPeloNome(request.getNomePais());
+			Estado estado = bancoDeDadosPaisesEEstados.buscaEstadoPeloNome(possivelEstado.get());
+
+			boolean estadoPertenceAoPais = estado.verificaSePertenceAoPais(pais);
+
+			if (!estadoPertenceAoPais) {
+				erros.add("O estado selecionado nao pertence ao Pais!");
+			}
 		}
-		return List.of("O país não pertence ao estado passado!");
+		return erros;
 	}
 	
 	public static void main(String[] args) {
@@ -46,7 +54,7 @@ public class ValidaSeEstadoPertenceAPais {
 		/*
 		 * Aqui fique a vontade para brincar com os valores para testar seu validador
 		 */
-		NovoClienteRequest request = new NovoClienteRequest("Brasil");
+		NovoClienteRequest request = new NovoClienteRequest("estados unidos");
 		request.setEstado("Bahia");
 		
 		System.out.println(validador.valida(request));

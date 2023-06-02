@@ -14,4 +14,8 @@ public class Estado {
 	public boolean verificaSePertenceAoPais(Pais pais) {
 		return this.pais.equals(pais);
 	}
+
+	public Pais getPais() {
+		return this.pais;
+	}
 }

@@ -1,13 +1,18 @@
 package com.deveficiente.heuristicas.coesaobasica.validarequest.v1;
 
+import org.springframework.util.Assert;
+
+import javax.swing.text.html.Option;
+import java.util.Optional;
+
 public class NovoClienteRequest {
 
 	private String nomePais;
 	private String nomeEstado;
 
 	public NovoClienteRequest(String nomePais) {
-		//país é obrigatório no cadastro
 		super();
+		Assert.notNull(nomePais,"O nome do país é obrigatório");
 		this.nomePais = nomePais;
 	}
 	
@@ -17,8 +22,8 @@ public class NovoClienteRequest {
 	}
 
 
-	public String getEstado() {
-		return this.nomeEstado;
+	public Optional<String> getEstado() {
+		return Optional.ofNullable(this.nomeEstado);
 	}
 
 	public String getNomePais() {
