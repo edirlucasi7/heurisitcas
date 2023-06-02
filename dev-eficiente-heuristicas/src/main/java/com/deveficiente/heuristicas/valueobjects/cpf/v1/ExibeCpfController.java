@@ -21,9 +21,9 @@ public class ExibeCpfController {
 		
 		Cliente cliente = clienteRepository.busca(idCliente);
 		/*
-		 * Como você sabe se o cpf está na formataçÃo que você precisa aqui?	
+		 * Como você sabe se o cpf está na formatação que você precisa aqui?
 		 */
-		return cliente.getCpf();
+		return cliente.getCpfComPontuacao();
 	}
 	
 }

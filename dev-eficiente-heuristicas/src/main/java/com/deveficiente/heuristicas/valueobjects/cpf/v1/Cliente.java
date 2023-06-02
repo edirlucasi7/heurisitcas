@@ -10,8 +10,8 @@ public class Cliente {
 	}
 
 
-	public String getCpf() {
-		return cpf;
+	public String getCpfComPontuacao() {
+		return CpfFormatado.formataCpfSemPontuacao(cpf);
 	}
-	
+
 }

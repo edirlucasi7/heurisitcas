@@ -12,7 +12,7 @@ public class CriaClienteController {
 		 * Como você sabe se é para passar o cpf é com pontuação ou sem? Como você vai 
 		 * facilitar a vida de quem vai usar essa classe?	
 		 */
-		new Cliente(cpf);
+		new Cliente(CpfFormatado.formataCpfSemPontuacao(cpf));
 	}
 	
 }
