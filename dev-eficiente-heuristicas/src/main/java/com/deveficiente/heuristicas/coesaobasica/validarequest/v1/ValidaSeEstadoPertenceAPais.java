@@ -31,8 +31,11 @@ public class ValidaSeEstadoPertenceAPais {
 		Estado estado = bancoDeDadosPaisesEEstados.buscaEstadoPeloNome(request.getEstado());
 		Pais pais = bancoDeDadosPaisesEEstados.buscaPaisPeloNome(request.getNomePais());
 
-		estado.verificaSePertenceAoPais(pais);
+		boolean estadoPertenceAoPais = estado.verificaSePertenceAoPais(pais);
 
+		if (estadoPertenceAoPais) {
+			return List.of("O pais pertence ao Pais");
+		}
 		return List.of("O país não pertence ao estado passado!");
 	}
 	

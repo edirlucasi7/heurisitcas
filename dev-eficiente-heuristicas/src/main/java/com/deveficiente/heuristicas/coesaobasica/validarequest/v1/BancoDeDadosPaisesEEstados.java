@@ -14,7 +14,7 @@ public class BancoDeDadosPaisesEEstados {
 		Pais brasil = new Pais("Brasil");
 		this.paises.put("brasil",brasil);
 		Pais eua = new Pais("estados unidos");
-		this.paises.put("Estados Unidos",eua);
+		this.paises.put("estados unidos",eua);
 		
 		this.estados.put("bahia", new Estado("Bahia", brasil));
 		this.estados.put("california", new Estado("California", eua));
