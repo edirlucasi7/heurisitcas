@@ -1,7 +1,9 @@
 package com.deveficiente.heuristicas.coesaobasica.treinamentoseatividades.v1;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Treinamento {
 
@@ -31,16 +33,20 @@ public class Treinamento {
 		 * da atividade dentro do treinamento. 
 		 */
 
-		int posicaoAtividade1 = testeDeFogo.posicaoTituloAtividade("Atividade 1");
-		int posicaoAtividade2 = testeDeFogo.posicaoTituloAtividade("Atividade 2");
-		int posicaoAtividade3 = testeDeFogo.posicaoTituloAtividade("Atividade 3");
+		Optional<Integer> posicaoAtividade1 = testeDeFogo.posicaoTituloAtividade("Atividade 1");
+		Optional<Integer> posicaoAtividade2 = testeDeFogo.posicaoTituloAtividade("Atividade 2");
+		Optional<Integer> posicaoAtividade3 = testeDeFogo.posicaoTituloAtividade("Atividade 3");
 		System.out.println("A posição da Atividadade 1 é " + posicaoAtividade1);
 		System.out.println("A posição da Atividadade 2 é " + posicaoAtividade2);
 		System.out.println("A posição da Atividadade 3 é " + posicaoAtividade3);
 	}
 
-	private int posicaoTituloAtividade(String tituloAtividade) {
-		return this.titulosAtividades.indexOf(tituloAtividade) + 1;
+	private Optional<Integer> posicaoTituloAtividade(String tituloAtividade) {
+		int posicao = this.titulosAtividades.indexOf(tituloAtividade) + 1;
+		if (posicao > 0) {
+			return Optional.of(posicao);
+		}
+		return Optional.empty();
 	}
 
 	private void addTituloAtividade(String titulo) {
