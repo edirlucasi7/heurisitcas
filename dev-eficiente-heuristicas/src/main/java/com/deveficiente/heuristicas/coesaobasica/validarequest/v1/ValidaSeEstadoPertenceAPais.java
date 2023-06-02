@@ -28,14 +28,12 @@ public class ValidaSeEstadoPertenceAPais {
 	 * @return lista com mensagens de erros
 	 */
 	public List<String> valida(NovoClienteRequest request) {
-		//é necessário agora implementar a seguinte validação:
-		/*
-		 * A validação é a seguinte: Caso um estado tenha sido selecionado, 
-		 * é necessário verificar se ele pertence ao pais que foi escolhido.
-		 * 
-		 * Caso não pertença, uma lista com uma mensagem de erro deveria ser retornada
-		 */
-		return null;
+		Estado estado = bancoDeDadosPaisesEEstados.buscaEstadoPeloNome(request.getEstado());
+		Pais pais = bancoDeDadosPaisesEEstados.buscaPaisPeloNome(request.getNomePais());
+
+		estado.verificaSePertenceAoPais(pais);
+
+		return List.of("O país não pertence ao estado passado!");
 	}
 	
 	public static void main(String[] args) {

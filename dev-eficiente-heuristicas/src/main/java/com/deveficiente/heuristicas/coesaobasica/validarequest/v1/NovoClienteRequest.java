@@ -15,6 +15,13 @@ public class NovoClienteRequest {
 		//estado é opcional
 		this.nomeEstado = nomeEstado;
 	}
-	
 
+
+	public String getEstado() {
+		return this.nomeEstado;
+	}
+
+	public String getNomePais() {
+		return this.nomePais;
+	}
 }
