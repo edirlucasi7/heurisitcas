@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class NovaAtividadeController {
 
 	private AtividadeRepository atividadeRepository;
+	private IndexadorDeBuscaDeAtividade indexadorDeBuscaDeAtividade;
 
-	public NovaAtividadeController(AtividadeRepository atividadeRepository) {
+	public NovaAtividadeController(AtividadeRepository atividadeRepository, IndexadorDeBuscaDeAtividade indexadorDeBuscaDeAtividade) {
 		super();
 		this.atividadeRepository = atividadeRepository;
+		this.indexadorDeBuscaDeAtividade = indexadorDeBuscaDeAtividade;
 	}
 
 	@PostMapping("nova-atividade/v1")
@@ -25,5 +27,6 @@ public class NovaAtividadeController {
 		 * 
 		 * Como expressar isso no código?
 		 */
+		indexadorDeBuscaDeAtividade.indexa(novaAtividade);
 	}
 }
