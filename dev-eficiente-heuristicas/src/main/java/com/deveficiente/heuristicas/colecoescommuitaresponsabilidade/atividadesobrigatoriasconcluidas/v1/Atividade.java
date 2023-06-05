@@ -17,6 +17,10 @@ public class Atividade implements Comparable<Atividade> {
 		this.tipoAtividade = tipoAtividade;
 	}
 
+	public boolean verificaAtividadesObrigatorias() {
+		return TipoAtividade.OBRIGATORIA.equals(tipoAtividade);
+	}
+
 	public void adicionaResposta(Resposta resposta) {
 		this.respostas.add(resposta);
 	}

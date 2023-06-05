@@ -3,6 +3,7 @@ package com.deveficiente.heuristicas.colecoescommuitaresponsabilidade.atividades
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class SecaoAtividades implements Comparable<SecaoAtividades>{
 
@@ -14,7 +15,11 @@ public class SecaoAtividades implements Comparable<SecaoAtividades>{
 		super();
 		this.titulo = titulo;
 		this.ordem = ordem;
-		novasAtividades.stream().forEach(this.atividades :: add);
+		novasAtividades.stream().forEach(this.atividades::add);
+	}
+
+	public int verificaAtividadesObrigatorias() {
+		return (int) this.atividades.stream().filter(Atividade::verificaAtividadesObrigatorias).count();
 	}
 	
 	@Override
