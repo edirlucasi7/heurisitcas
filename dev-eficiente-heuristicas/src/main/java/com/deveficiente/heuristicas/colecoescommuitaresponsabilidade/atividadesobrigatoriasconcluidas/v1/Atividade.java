@@ -25,6 +25,10 @@ public class Atividade implements Comparable<Atividade> {
 		this.respostas.add(resposta);
 	}
 
+	public boolean verificaSeFoiFinalizada(Aluno aluno) {
+		return this.respostas.stream().anyMatch(r -> r.getAluno().equals(aluno));
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

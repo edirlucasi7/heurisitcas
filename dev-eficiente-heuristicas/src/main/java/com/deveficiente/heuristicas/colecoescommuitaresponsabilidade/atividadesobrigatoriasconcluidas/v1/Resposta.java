@@ -11,6 +11,10 @@ public class Resposta {
 		this.aluno = aluno;
 	}
 
+	public Aluno getAluno() {
+		return this.aluno;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -42,5 +46,4 @@ public class Resposta {
 			return false;
 		return true;
 	}
-
 }

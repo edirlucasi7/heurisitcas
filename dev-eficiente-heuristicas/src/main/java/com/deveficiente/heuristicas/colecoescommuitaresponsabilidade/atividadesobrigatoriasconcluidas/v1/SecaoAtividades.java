@@ -1,8 +1,6 @@
 package com.deveficiente.heuristicas.colecoescommuitaresponsabilidade.atividadesobrigatoriasconcluidas.v1;
 
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class SecaoAtividades implements Comparable<SecaoAtividades>{
@@ -27,4 +25,7 @@ public class SecaoAtividades implements Comparable<SecaoAtividades>{
 		return this.ordem - outra.ordem;
 	}
 
+	public SortedSet<Atividade> getAtividades() {
+		return this.atividades;
+	}
 }
