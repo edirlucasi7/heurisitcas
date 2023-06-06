@@ -19,11 +19,9 @@ public class Treinamento {
 	}
 	
 	public int calculaQuantasObrigatoriasForamFinalizadas(Aluno aluno) {
-		return (int) this.secoes.stream()
-			.flatMap(secao -> secao.getAtividades().stream())
-			.filter(atividade -> atividade.verificaAtividadesObrigatorias())
-			.filter(atividade -> atividade.verificaSeFoiFinalizada(aluno))
-			.count();
+		return (int) this.secoes.stream().flatMap(
+				secao -> secao.respostasDeterminadoAluno(aluno).stream())
+						.filter(resposta -> resposta.isObrigatoria()).count();
 	}
 	
 	public BigDecimal calculaPercentualDeAtividadesObrigatorias() {
@@ -44,7 +42,7 @@ public class Treinamento {
 		
 		Atividade atividade2 = new Atividade("t2", 1, TipoAtividade.OBRIGATORIA);
 		atividadeRepository.save(atividade2);
-		atividade2.adicionaResposta(new Resposta(atividade2, aluno2));
+		atividade2.adicionaResposta(new Resposta(atividade2, aluno1));
 		atividades.add(atividade2);
 		
 		Atividade atividade3 = new Atividade("t3", 2, TipoAtividade.OBRIGATORIA);

@@ -2,6 +2,7 @@ package com.deveficiente.heuristicas.colecoescommuitaresponsabilidade.atividades
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Atividade implements Comparable<Atividade> {
 
@@ -67,4 +68,8 @@ public class Atividade implements Comparable<Atividade> {
 		return "Atividade [titulo=" + titulo + ", ordem=" + ordem + "]";
 	}
 
+	public List<Resposta> respostasDeterminadoAluno(Aluno aluno) {
+		return this.respostas.stream().filter(r -> r.getAluno().equals(aluno))
+				.toList();
+	}
 }

@@ -46,4 +46,8 @@ public class Resposta {
 			return false;
 		return true;
 	}
+
+	public boolean isObrigatoria() {
+		return this.atividade.verificaAtividadesObrigatorias();
+	}
 }
