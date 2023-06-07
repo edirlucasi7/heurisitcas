@@ -20,6 +20,10 @@ public class SecaoAtividades implements Comparable<SecaoAtividades>{
 	public int verificaAtividadesObrigatorias() {
 		return (int) this.atividades.stream().filter(Atividade::verificaAtividadesObrigatorias).count();
 	}
+
+	public int retornaQuantidadeAtividades() {
+		return this.atividades.size();
+	}
 	
 	@Override
 	public int compareTo(SecaoAtividades outra) {

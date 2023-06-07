@@ -25,7 +25,14 @@ public class Treinamento {
 	}
 	
 	public BigDecimal calculaPercentualDeAtividadesObrigatorias() {
-		return BigDecimal.ZERO;
+		return BigDecimal.valueOf(calculaQuantidadeAtividadesObrigatorias())
+				.divide(BigDecimal.valueOf(calculaQuantidadeDeAtividades()), 2, BigDecimal.ROUND_HALF_UP);
+	}
+
+	private int calculaQuantidadeDeAtividades() {
+		return this.secoes.stream()
+				.mapToInt(SecaoAtividades::retornaQuantidadeAtividades)
+				.sum();
 	}
 	
 	public static void main(String[] args) {
@@ -59,5 +66,8 @@ public class Treinamento {
 
 		int quantidadeDeAtividadesObrigatoriasForamFinalizadas = treinamento.calculaQuantasObrigatoriasForamFinalizadas(aluno1);
 		System.out.println(quantidadeDeAtividadesObrigatoriasForamFinalizadas);
+
+		BigDecimal percentualAtividadesObrigatorias = treinamento.calculaPercentualDeAtividadesObrigatorias();
+		System.out.println(percentualAtividadesObrigatorias);
 	}
 }
