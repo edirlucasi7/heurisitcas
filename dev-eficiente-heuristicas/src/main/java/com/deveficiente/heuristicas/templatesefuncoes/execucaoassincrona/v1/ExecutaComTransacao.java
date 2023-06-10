@@ -15,6 +15,5 @@ public class ExecutaComTransacao {
 		T retorno = funcao.get();
 		System.out.println("Simulando commit da transacao");
 		return retorno;
-
 	}
 }

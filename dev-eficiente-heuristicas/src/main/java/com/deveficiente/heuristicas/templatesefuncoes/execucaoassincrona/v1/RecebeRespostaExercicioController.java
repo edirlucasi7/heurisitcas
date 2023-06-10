@@ -1,10 +1,10 @@
 package com.deveficiente.heuristicas.templatesefuncoes.execucaoassincrona.v1;
 
-import javax.transaction.Transactional;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.transaction.Transactional;
 
 @RestController
 class RecebeRespostaExercicioController {
@@ -13,16 +13,20 @@ class RecebeRespostaExercicioController {
 	private ExercicioRepository exercicioRepository;
 	private IntegracaoTypeForm integracaoTypeForm;
 	private ExecutaComTransacao executaComTransacao;
+	private ExecutaAsync executaAsync;
+	private SubmeteRespostaParaAnalise submeteRespostaParaAnalise;
 
 	public RecebeRespostaExercicioController(
 			RespostaRepository respostaRepository,
 			ExercicioRepository exercicioRepository,
-			IntegracaoTypeForm integracaoTypeForm,ExecutaComTransacao executaComTransacao) {
+			IntegracaoTypeForm integracaoTypeForm, ExecutaComTransacao executaComTransacao, ExecutaAsync executaAsync, SubmeteRespostaParaAnalise submeteRespostaParaAnalise) {
 		super();
 		this.respostaRepository = respostaRepository;
 		this.exercicioRepository = exercicioRepository;
 		this.integracaoTypeForm = integracaoTypeForm;
 		this.executaComTransacao = executaComTransacao;
+		this.executaAsync = executaAsync;
+		this.submeteRespostaParaAnalise = submeteRespostaParaAnalise;
 	}
 
 	@PostMapping("/recebe-resposta/v1")
@@ -47,11 +51,17 @@ class RecebeRespostaExercicioController {
 			 * 
 			 */			
 			
-			return executaComTransacao.comRetorno(() -> {
-				System.out.println("Salvando a resposta e definindo retorno");
+			ResponseEntity<?> statusRetorno = executaComTransacao.comRetorno(() -> {
+				System.out.println("Salvando resposta e definindo retorno");
 				respostaRepository.salva(novaResposta);
-				return ResponseEntity.ok("Resposta salva");				
+				return ResponseEntity.ok("Resposta salva com sucesso");
 			});
+
+			this.executaAsync.semRetorno(() ->
+					this.submeteRespostaParaAnalise.envia(novaResposta));
+
+
+			return statusRetorno;
 		}
 
 		return ResponseEntity.notFound().build();
@@ -63,10 +73,12 @@ class RecebeRespostaExercicioController {
 		ExercicioRepository exercicioRepository = new ExercicioRepository();
 		IntegracaoTypeForm integracaoTypeForm = new IntegracaoTypeForm();
 		ExecutaComTransacao executaComTransacao = new ExecutaComTransacao();
+		ExecutaAsync executaAsync = new ExecutaAsync();
+		SubmeteRespostaParaAnalise submeteRespostaParaAnalise = new SubmeteRespostaParaAnaliseComAmazonSQS();
 
 		
 		RecebeRespostaExercicioController controller = new RecebeRespostaExercicioController(respostaRepository,
-				exercicioRepository, integracaoTypeForm,executaComTransacao);
+				exercicioRepository, integracaoTypeForm,executaComTransacao, executaAsync, submeteRespostaParaAnalise);
 		
 		Aluno alunoLogado = new Aluno("teste@deveficiente.com");
 		NovaRespostaRequest request = new NovaRespostaRequest(1l,

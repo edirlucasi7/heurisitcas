@@ -2,5 +2,5 @@ package com.deveficiente.heuristicas.postergandoeflexibilizandodecisoes.naoseiqu
 
 public interface SubmeteRespostaParaAnalise {
 
-	public void envia(Resposta resposta);
+	void envia(Resposta resposta);
 }

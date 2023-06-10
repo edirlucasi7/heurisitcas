@@ -1,7 +1,5 @@
 package com.deveficiente.heuristicas.postergandoeflexibilizandodecisoes.naoseiqualfilausar.v2;
 
-import java.util.Map;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +19,7 @@ public class RecebeRespostaExercicioController {
 		this.submeteRespostaParaAnalise = submeteRespostaParaAnalise;
 	}
 
-	@PostMapping("/recebe-resposta/v1")
+	@PostMapping("/recebe-resposta/v1 ")
 	public void executa(NovaRespostaRequest request) {
 
 		Resposta novaResposta = request.toResposta(exercicioRepository);
