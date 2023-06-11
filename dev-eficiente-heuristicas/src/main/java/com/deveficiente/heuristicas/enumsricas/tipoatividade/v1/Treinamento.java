@@ -13,6 +13,12 @@ public class Treinamento {
 		this.titulo = titulo;
 		secoes.forEach(this.secoes :: add);
 	}
+
+	public int calculaQuantidadeDeAtividades() {
+		return this.secoes.stream()
+				.mapToInt(SecaoAtividades::calculaQuantidadeAtividades)
+				.sum();
+	}
 	
 	public int calculaQuantidadeAtividadesObrigatorias() {
 		return this.secoes.stream()
@@ -27,26 +33,29 @@ public class Treinamento {
 	}
 	
 	public int calculaQuantidadeAtividadesNaoObrigatorias() {
-		return 0;
+		return this.secoes.stream()
+				.mapToInt(SecaoAtividades::calculaQuantidadeAtividadesNaoObrigatorias)
+				.sum();
 	}
 	
 	public BigDecimal calculaPercentualDeAtividadesObrigatorias() {
-		return BigDecimal.ZERO;
+		return BigDecimal.valueOf(calculaQuantidadeAtividadesObrigatorias())
+				.divide(BigDecimal.valueOf(calculaQuantidadeDeAtividades()), 2, BigDecimal.ROUND_HALF_UP);
 	}
-	
+
 	public static void main(String[] args) {
 		Aluno aluno1 = new Aluno("aluno1@email.com");
 		Aluno aluno2 = new Aluno("aluno2@email.com");
 		AtividadeRepository atividadeRepository = new AtividadeRepository();
 		
 		List<Atividade> atividades = new ArrayList<>();
-		Atividade atividade1 = new Atividade("t1", 0,TipoAtividade.EXEMPLO_TRABALHADO);
+		Atividade atividade1 = new Atividade("t1", 0,TipoAtividade.CONVENCIONAL);
 		atividadeRepository.save(atividade1);
 		atividades.add(atividade1);
 		atividade1.adicionaResposta(new Resposta(atividade1, aluno1));
 		atividade1.adicionaResposta(new Resposta(atividade1, aluno2));
 		
-		Atividade atividade2 = new Atividade("t2", 1,TipoAtividade.IMITACAO);
+		Atividade atividade2 = new Atividade("t2", 1,TipoAtividade.CONVENCIONAL);
 		atividadeRepository.save(atividade2);
 		atividade2.adicionaResposta(new Resposta(atividade2, aluno1));
 		atividades.add(atividade2);
@@ -63,5 +72,7 @@ public class Treinamento {
 		Treinamento treinamento = new Treinamento("titulo do treinamento", List.of(secaoAtividades));
 		System.out.println(treinamento.calculaQuantidadeAtividadesObrigatorias());
 		System.out.println(treinamento.calculaQuantasObrigatoriasForamFinalizadas(aluno1));
+		System.out.println(treinamento.calculaQuantidadeAtividadesNaoObrigatorias());
+		System.out.println(treinamento.calculaPercentualDeAtividadesObrigatorias());
 	}
 }

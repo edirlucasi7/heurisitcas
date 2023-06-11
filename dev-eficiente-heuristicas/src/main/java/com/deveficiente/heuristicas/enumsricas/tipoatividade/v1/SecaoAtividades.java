@@ -34,4 +34,14 @@ public class SecaoAtividades implements Comparable<SecaoAtividades>{
 				.mapToInt(atividade -> atividade.calculaQuantasObrigatoriasForamFinalizadas(aluno))
 				.sum();
 	}
+
+	public int calculaQuantidadeAtividadesNaoObrigatorias() {
+		return (int) this.atividades.stream()
+				.filter(atividade -> !atividade.verificaSeEUmaAtividadeObrigatoria())
+				.count();
+	}
+
+	public int calculaQuantidadeAtividades() {
+		return this.atividades.size();
+	}
 }
