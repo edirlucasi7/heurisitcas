@@ -1,10 +1,10 @@
 package com.deveficiente.heuristicas.templatesefuncoes.execucaoassincrona.v1;
 
+import javax.transaction.Transactional;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.transaction.Transactional;
 
 @RestController
 class RecebeRespostaExercicioController {
@@ -74,7 +74,8 @@ class RecebeRespostaExercicioController {
 		IntegracaoTypeForm integracaoTypeForm = new IntegracaoTypeForm();
 		ExecutaComTransacao executaComTransacao = new ExecutaComTransacao();
 		ExecutaAsync executaAsync = new ExecutaAsync();
-		SubmeteRespostaParaAnalise submeteRespostaParaAnalise = new SubmeteRespostaParaAnaliseComAmazonSQS();
+		AmazonSQS amazonSQS = new AmazonSQS();
+		SubmeteRespostaParaAnalise submeteRespostaParaAnalise = new SubmeteRespostaParaAnaliseComAmazonSQS(amazonSQS);
 
 		
 		RecebeRespostaExercicioController controller = new RecebeRespostaExercicioController(respostaRepository,

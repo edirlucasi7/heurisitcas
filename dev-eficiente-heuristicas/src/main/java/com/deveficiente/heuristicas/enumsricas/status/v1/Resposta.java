@@ -43,9 +43,9 @@ public class Resposta {
 			return false;
 		return true;
 	}
-	
-	
 
-	
 
+    public boolean pertenceAAtividade(Atividade atividade) {
+		return this.atividade.equals(atividade);
+    }
 }

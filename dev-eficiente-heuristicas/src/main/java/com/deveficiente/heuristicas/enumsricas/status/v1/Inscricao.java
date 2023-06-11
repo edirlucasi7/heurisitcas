@@ -3,16 +3,28 @@ package com.deveficiente.heuristicas.enumsricas.status.v1;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.deveficiente.heuristicas.enumsricas.status.v1.StatusProgresso.*;
+
 public class Inscricao {
 
 	private Treinamento treinamento;
 	private Aluno aluno;
 	private List<Resposta> respostas = new ArrayList<>();
+	private StatusProgresso statusProgresso;
 
-	public Inscricao(Aluno aluno, Treinamento treinamento) {
+	public Inscricao(Aluno aluno, Treinamento treinamento, StatusProgresso statusProgresso) {
 		super();
 		this.aluno = aluno;
 		this.treinamento = treinamento;
+		this.statusProgresso = statusProgresso;
+	}
+
+	public void addResposta(Atividade atividade) {
+		this.respostas.add(new Resposta(this, atividade));
+	}
+
+	public StatusProgresso calculaProgresso() {
+		return StatusProgresso.descobre(this);
 	}
 
 	@Override
@@ -47,21 +59,6 @@ public class Inscricao {
 		return true;
 	}
 
-	public StatusProgresso calculaProgresso() {
-		/*
-		 * Existem 3 possibilidades de progresso:
-		 * 
-		 * 1) Não começou 2) Começou 3) Finalizou
-		 * 
-		 * Só que esses status podem evoluir com o tempo. Pode ser que no futuro
-		 * seja importante saber quem passou da metade.
-		 * 
-		 * Como você vai resolver isso aqui?
-		 */
-
-		return StatusProgresso.NAO_INICIADO;
-	}
-
 	public static void main(String[] args) {
 		Atividade atividade1 = new Atividade("atividade 1");
 		Atividade atividade2 = new Atividade("atividade 2");
@@ -72,11 +69,24 @@ public class Inscricao {
 		
 		Aluno aluno = new Aluno("pessoa@deveficiente.com");
 
-		Inscricao inscricao = new Inscricao(aluno,treinamento);
-		
-		//faça o código para adicionar uma resposta numa inscricao
+		Inscricao inscricao = new Inscricao(aluno, treinamento, NAO_INICIADO);
+
+		inscricao.addResposta(atividade1);
+		inscricao.addResposta(atividade2);
+		inscricao.addResposta(atividade3);
 
 		System.out.println(inscricao.calculaProgresso());
 	}
 
+	public List<Resposta> getRespostas() {
+		return respostas;
+	}
+
+	public boolean jaRespondeu() {
+		return !this.respostas.isEmpty();
+	}
+
+	public boolean jaFinalizou() {
+		return this.treinamento.estaTodoRespondido(respostas);
+	}
 }
