@@ -43,4 +43,7 @@ public class Resposta {
 		return true;
 	}
 
+	public boolean verificaSeRespostaEstaFinalizada(Aluno aluno) {
+		return this.aluno.equals(aluno);
+	}
 }

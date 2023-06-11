@@ -59,4 +59,13 @@ public class Atividade implements Comparable<Atividade> {
 		return "Atividade [titulo=" + titulo + ", ordem=" + ordem + "]";
 	}
 
+	public boolean verificaSeEUmaAtividadeObrigatoria() {
+		return this.tipoAtividade.isObrigatorio();
+	}
+
+	public int calculaQuantasObrigatoriasForamFinalizadas(Aluno aluno) {
+		return (int) this.respostas.stream()
+				.filter(resposta -> resposta.verificaSeRespostaEstaFinalizada(aluno))
+				.count();
+	}
 }

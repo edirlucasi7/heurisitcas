@@ -1,11 +1,7 @@
 package com.deveficiente.heuristicas.enumsricas.tipoatividade.v1;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Treinamento {
 
@@ -19,11 +15,15 @@ public class Treinamento {
 	}
 	
 	public int calculaQuantidadeAtividadesObrigatorias() {
-		return 0;
+		return this.secoes.stream()
+				.mapToInt(SecaoAtividades::calculaQuantidadeAtividadesObrigatorias)
+				.sum();
 	}
 	
 	public int calculaQuantasObrigatoriasForamFinalizadas(Aluno aluno) {
-		return 0;
+		return this.secoes.stream()
+				.mapToInt(secao -> secao.calculaQuantasObrigatoriasForamFinalizadas(aluno))
+				.sum();
 	}
 	
 	public int calculaQuantidadeAtividadesNaoObrigatorias() {
@@ -50,19 +50,18 @@ public class Treinamento {
 		atividadeRepository.save(atividade2);
 		atividade2.adicionaResposta(new Resposta(atividade2, aluno1));
 		atividades.add(atividade2);
-		
-		
+
 		Atividade atividade3 = new Atividade("t3", 2,TipoAtividade.CONVENCIONAL);
 		atividadeRepository.save(atividade3);
 		atividades.add(atividade3);
-		
-		
-		SecaoAtividades secaoAtividades = new SecaoAtividades("titulo",1,atividades);
-		
-		new Treinamento("titulo do treinamento", List.of(secaoAtividades));
-		
-	}	
-	
-	
 
+		Resposta resposta1 = new Resposta(atividade3, aluno1);
+		atividade3.adicionaResposta(resposta1);
+
+		SecaoAtividades secaoAtividades = new SecaoAtividades("titulo",1,atividades);
+
+		Treinamento treinamento = new Treinamento("titulo do treinamento", List.of(secaoAtividades));
+		System.out.println(treinamento.calculaQuantidadeAtividadesObrigatorias());
+		System.out.println(treinamento.calculaQuantasObrigatoriasForamFinalizadas(aluno1));
+	}
 }

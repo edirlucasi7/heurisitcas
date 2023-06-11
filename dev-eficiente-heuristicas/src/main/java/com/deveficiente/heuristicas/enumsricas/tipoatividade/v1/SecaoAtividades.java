@@ -22,4 +22,16 @@ public class SecaoAtividades implements Comparable<SecaoAtividades>{
 		return this.ordem - outra.ordem;
 	}
 
+	public int calculaQuantidadeAtividadesObrigatorias() {
+		return (int) this.atividades.stream()
+				.filter(atividade -> atividade.verificaSeEUmaAtividadeObrigatoria())
+				.count();
+	}
+
+	public int calculaQuantasObrigatoriasForamFinalizadas(Aluno aluno) {
+		return this.atividades.stream()
+				.filter(atividade -> atividade.verificaSeEUmaAtividadeObrigatoria())
+				.mapToInt(atividade -> atividade.calculaQuantasObrigatoriasForamFinalizadas(aluno))
+				.sum();
+	}
 }
